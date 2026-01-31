@@ -46,9 +46,7 @@ export function DashboardNavbar() {
       <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
         <div className="capitalize">
           <Breadcrumbs
-            className={`bg-transparent p-0 transition-all ${fixedNavbar ? "mt-1" : ""
-              }`}
-          >
+            className={`bg-transparent p-0 transition-all ${fixedNavbar ? "mt-1" : ""   }`}>
             <Link to={`/${layout}`}>
               <Typography
                 variant="small"
