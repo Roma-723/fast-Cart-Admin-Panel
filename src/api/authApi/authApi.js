@@ -1,16 +1,27 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import { apiInstance, axiosRequest } from "../../utils/url";
+import { createAsyncThunk } from "@reduxjs/toolkit"
+import { apiInstance } from "../../utils/url"
+import { toast } from "react-hot-toast"
 
+export const loginUser = createAsyncThunk(
+  "auth/loginUser",
+  async (user, { rejectWithValue }) => {
+    try {
+      const { data } = await apiInstance.post("/Account/login", user)
 
+      if (data?.role !== "Admin") {
+        toast.error("You are not admin. Access denied.", {
+          style: { background: "#dc2626", color: "#fff" },
+        })
+        return rejectWithValue("NOT_ADMIN")
+      }
 
-export const loginUser = createAsyncThunk("auth/loginUser", async (user) => {
-  try {
-    let { data } = await apiInstance.post(`/Account/login`, user);
-     
-    return data;
-    
-  } catch (error) {
-    console.log(error);
+      toast.success("Welcome Admin", {
+        style: { background: "#16a34a", color: "#fff" },
+      })
+
+      return data
+    } catch (error) {
+      return rejectWithValue(error)
+    }
   }
-});
+)
